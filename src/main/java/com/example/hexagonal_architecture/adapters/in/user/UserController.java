@@ -15,7 +15,7 @@ import com.example.hexagonal_architecture.application.ports.in.user.InsertUserIn
 @RestController
 public class UserController {
 
-    private InsertUserInputPort insertUserInputPort;
+    private final InsertUserInputPort insertUserInputPort;
 
     public UserController(InsertUserInputPort insertUserInputPort) {
         this.insertUserInputPort = insertUserInputPort;
