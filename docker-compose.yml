@@ -1,0 +1,16 @@
+services:
+  hexagonal-arch-db:
+    image: mongo:latest
+    container_name: hexagonal-arch-db
+    restart: always
+    networks:
+      - hexagonal-arch
+    environment:
+       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    ports:
+      - "27017:27017"
+
+networks:
+  hexagonal-arch:
+    driver: bridge
