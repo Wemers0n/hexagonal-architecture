@@ -1,0 +1,11 @@
+# spring.application.name=hexagonal-architecture
+
+spring:
+    application:
+        name: hexagonal-architecture
+
+    data:
+        mongodb:
+            database: admin
+            uri: ${MONGO_DB_URI:mongodb://admin:root@localhost:27017}
+            
