@@ -20,11 +20,32 @@ public class Task {
         this.isDone = isDone;
     }
 
+    public Task(String id, String userId, String title, String description) {
+        this.id = id;
+        this.userId = userId;
+        this.title = title;
+        this.description = description;
+        this.isDone = false;
+    }
+
     public Task(String userId, String title, String description, Boolean isDone) {
         this.userId = userId;
         this.title = title;
         this.description = description;
         this.isDone = isDone;
+    }
+
+    public Task(String title, String description, String userId) {
+        this.title = title;
+        this.description = description;
+        this.userId = userId;
+        this.isDone = false;
+    }
+
+    public Task(String title, String description) {
+        this.title = title;
+        this.description = description;
+        this.isDone = false;
     }
 
     public String getId() {
