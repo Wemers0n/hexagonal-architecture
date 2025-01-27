@@ -14,7 +14,7 @@ import com.example.hexagonal_architecture.application.ports.out.user.InsertUserO
 @Component
 public class InsertUserAdapter implements InsertUserOutputPort {
 
-    private static final String ID_PATERN = "%s_%s"; 
+    private static final String ID_PATTERN = "%s_%s"; 
 
     private final UserCollectionRepository userCollectionRepository;
 
@@ -31,7 +31,7 @@ public class InsertUserAdapter implements InsertUserOutputPort {
         }
 
         userCollectionRepository.save(UserCollection.builder()
-            .id(String.format(ID_PATERN, Instant.now().toEpochMilli(), UUID.randomUUID()))
+            .id(String.format(ID_PATTERN, Instant.now().toEpochMilli(), UUID.randomUUID()))
             .firstName(user.getFirstName())
             .lastName(user.getLastName())
             .email(user.getEmail())

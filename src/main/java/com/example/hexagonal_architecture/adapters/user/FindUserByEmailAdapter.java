@@ -19,7 +19,7 @@ public class FindUserByEmailAdapter implements FindUserByEmailOutputPort{
     }
 
     @Override
-    public User findByEmail(String email) {
+    public User findByEmail(String email) throws Exception{
         Optional<UserCollection> userByEmail = userCollectionRepository.findByEmail(email);
     
         if (userByEmail.isEmpty()) {
