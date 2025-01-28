@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TaskRequest {
+public class TaskRequestDTO {
 
     private String userId;
     private String title;
