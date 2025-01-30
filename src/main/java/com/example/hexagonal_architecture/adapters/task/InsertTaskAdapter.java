@@ -1,6 +1,7 @@
 package com.example.hexagonal_architecture.adapters.task;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.springframework.stereotype.Component;
@@ -28,6 +29,10 @@ public class InsertTaskAdapter implements InsertTaskOutputPort {
             .userId(task.getUserId())
             .title(task.getTitle())
             .description(task.getDescription())
+            .priority(task.getPriority())
+            .startAt(task.getStartAt())
+            .endAt(task.getEndAt())
+            .createdAt(LocalDateTime.now())
             .build());
     }
 }

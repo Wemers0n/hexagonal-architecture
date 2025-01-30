@@ -1,51 +1,47 @@
 package com.example.hexagonal_architecture.application.core.domains;
 
+import java.time.LocalDateTime;
+
 public class Task {
 
     private String id;
     private String userId;
     private String title;
     private String description;
-    private Boolean isDone;
+    private String priority;
+    private LocalDateTime startAt;
+    private LocalDateTime endAt;
+    private LocalDateTime createdAt;
 
-    public Task(Boolean isDone) {
-        this.isDone = false;
+    public Task() {
     }
 
-    public Task(String id, String userId, String title, String description, Boolean isDone) {
+    public Task(String id, String userId, String title, String description, String priority, LocalDateTime startAt, LocalDateTime endAt, LocalDateTime createdAt) {
         this.id = id;
         this.userId = userId;
         this.title = title;
         this.description = description;
-        this.isDone = isDone;
-    }
+        this.priority = priority;
+        this.startAt = startAt;
+        this.endAt = endAt;
+        this.createdAt = createdAt;
+        }
 
-    public Task(String id, String userId, String title, String description) {
-        this.id = id;
+    public Task(String userId, String title, String description, String priority, LocalDateTime startAt, LocalDateTime endAt) {
         this.userId = userId;
         this.title = title;
         this.description = description;
-        this.isDone = false;
+        this.priority = priority;
+        this.startAt = startAt;
+        this.endAt = endAt;
     }
 
-    public Task(String userId, String title, String description, Boolean isDone) {
-        this.userId = userId;
+    public Task(String title, String description, String priority, LocalDateTime startAt, LocalDateTime endAt) {
         this.title = title;
         this.description = description;
-        this.isDone = isDone;
-    }
-
-    public Task(String title, String description, String userId) {
-        this.title = title;
-        this.description = description;
-        this.userId = userId;
-        this.isDone = false;
-    }
-
-    public Task(String title, String description) {
-        this.title = title;
-        this.description = description;
-        this.isDone = false;
+        this.priority = priority;
+        this.startAt = startAt;
+        this.endAt = endAt;
     }
 
     public String getId() {
@@ -80,12 +76,32 @@ public class Task {
         this.description = description;
     }
 
-    public Boolean getIsDone() {
-        return isDone;
+    public String getPriority() {
+        return priority;
     }
 
-    public void setIsDone(Boolean isDone) {
-        this.isDone = isDone;
+    public void setPriority(String priority) {
+        this.priority = priority;
     }
 
+    public LocalDateTime getStartAt() {
+        return startAt;
+    }
+
+    public void setStartAt(LocalDateTime startAt) {
+        this.startAt = startAt;
+    }
+
+    public LocalDateTime getEndAt() {
+        return endAt;
+    }
+
+    public void setEndAt(LocalDateTime endAt) {
+        this.endAt = endAt;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+    
 }

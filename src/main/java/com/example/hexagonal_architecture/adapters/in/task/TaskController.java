@@ -36,7 +36,7 @@ public class TaskController {
 
     @PostMapping
     public ResponseEntity<TaskRequestDTO> saveTask(@RequestBody TaskRequestDTO request) throws Exception{
-        insertTaskInputPort.insertTask(new Task(request.getTitle(), request.getDescription(), request.getUserId()));
+        insertTaskInputPort.insertTask(new Task(request.getUserId(), request.getTitle(), request.getDescription(), request.getPriority(), request.getStartAt(), request.getEndAt()));
         return new ResponseEntity<>(request, HttpStatus.CREATED);
     }
 

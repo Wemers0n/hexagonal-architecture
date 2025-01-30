@@ -1,5 +1,7 @@
 package com.example.hexagonal_architecture.adapters.out.database.model;
 
+import java.time.LocalDateTime;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -20,6 +22,9 @@ public class TaskCollection {
     private String userId;
     private String title;
     private String description;
-    private Boolean isDone;
+    private String priority;
+    private LocalDateTime startAt;
+    private LocalDateTime endAt;
+    private LocalDateTime createdAt;
 
 }

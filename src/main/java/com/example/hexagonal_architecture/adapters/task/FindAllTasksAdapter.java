@@ -26,7 +26,9 @@ public class FindAllTasksAdapter implements FindAllTasksByIdUserOutputPort {
         
         if(!allTasksCollections.isEmpty()){
             allTasksCollections.stream().forEach(tasks -> {
-                taskResponse.add(new Task(tasks.getId(), tasks.getUserId(), tasks.getTitle(), tasks.getDescription()));
+                taskResponse
+                .add(new Task(tasks.getId(), tasks.getUserId(), tasks.getTitle(), tasks.getDescription(),
+                 tasks.getPriority(), tasks.getStartAt(), tasks.getEndAt(), tasks.getCreatedAt()));
             });
         }
         return taskResponse;
