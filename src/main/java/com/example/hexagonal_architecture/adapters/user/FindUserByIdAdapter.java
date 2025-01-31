@@ -8,6 +8,7 @@ import com.example.hexagonal_architecture.adapters.out.database.model.UserCollec
 import com.example.hexagonal_architecture.adapters.out.database.repository.UserCollectionRepository;
 import com.example.hexagonal_architecture.application.core.domains.User;
 import com.example.hexagonal_architecture.application.ports.out.user.FindUserByIdOutputPort;
+import com.example.hexagonal_architecture.configurations.handler.exceptions.UserNotExistsException;
 
 @Component
 public class FindUserByIdAdapter implements FindUserByIdOutputPort{
@@ -24,7 +25,7 @@ public class FindUserByIdAdapter implements FindUserByIdOutputPort{
        Optional<UserCollection> userId = this.userCollectionRepository.findById(id);
 
        if(userId.isEmpty()){
-        throw new RuntimeException("User not found");
+        throw new UserNotExistsException(id);
        }
        
        UserCollection user = userId.get();

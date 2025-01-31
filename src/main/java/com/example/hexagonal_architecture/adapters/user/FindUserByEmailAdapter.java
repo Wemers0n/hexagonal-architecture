@@ -8,6 +8,7 @@ import com.example.hexagonal_architecture.adapters.out.database.model.UserCollec
 import com.example.hexagonal_architecture.adapters.out.database.repository.UserCollectionRepository;
 import com.example.hexagonal_architecture.application.core.domains.User;
 import com.example.hexagonal_architecture.application.ports.out.user.FindUserByEmailOutputPort;
+import com.example.hexagonal_architecture.configurations.handler.exceptions.UserNotExistsException;
 
 @Component
 public class FindUserByEmailAdapter implements FindUserByEmailOutputPort{
@@ -23,7 +24,7 @@ public class FindUserByEmailAdapter implements FindUserByEmailOutputPort{
         Optional<UserCollection> userByEmail = userCollectionRepository.findByEmail(email);
     
         if (userByEmail.isEmpty()) {
-            throw new RuntimeException("Email not found");
+            throw new UserNotExistsException(email);
         }
     
         UserCollection user = userByEmail.get();

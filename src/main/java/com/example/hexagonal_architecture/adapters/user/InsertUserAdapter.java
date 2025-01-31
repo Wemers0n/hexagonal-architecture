@@ -11,6 +11,7 @@ import com.example.hexagonal_architecture.adapters.out.database.model.UserCollec
 import com.example.hexagonal_architecture.adapters.out.database.repository.UserCollectionRepository;
 import com.example.hexagonal_architecture.application.core.domains.User;
 import com.example.hexagonal_architecture.application.ports.out.user.InsertUserOutputPort;
+import com.example.hexagonal_architecture.configurations.handler.exceptions.EmailAlreadyRegisteredException;
 
 @Component
 public class InsertUserAdapter implements InsertUserOutputPort {
@@ -30,7 +31,7 @@ public class InsertUserAdapter implements InsertUserOutputPort {
         Optional<UserCollection> possibleUser = userCollectionRepository.findByEmail(user.getEmail());
 
         if (possibleUser.isPresent()) {
-            throw new IllegalArgumentException("Email ja esta sendo usado");
+            throw new EmailAlreadyRegisteredException(user.getEmail());
         }
 
         UserCollection collection = mapper.toDatabase(user);
