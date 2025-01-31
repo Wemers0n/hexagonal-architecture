@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 
+import com.example.hexagonal_architecture.adapters.mappers.UserMapper;
 import com.example.hexagonal_architecture.adapters.out.database.model.UserCollection;
 import com.example.hexagonal_architecture.adapters.out.database.repository.UserCollectionRepository;
 import com.example.hexagonal_architecture.application.core.domains.User;
@@ -17,9 +18,11 @@ public class InsertUserAdapter implements InsertUserOutputPort {
     private static final String ID_PATTERN = "%s_%s"; 
 
     private final UserCollectionRepository userCollectionRepository;
+    private final UserMapper mapper;
 
-    public InsertUserAdapter(UserCollectionRepository userCollectionRepository) {
+    public InsertUserAdapter(UserCollectionRepository userCollectionRepository, UserMapper mapper) {
         this.userCollectionRepository = userCollectionRepository;
+        this.mapper = mapper;
     }
 
     @Override
@@ -30,12 +33,10 @@ public class InsertUserAdapter implements InsertUserOutputPort {
             throw new IllegalArgumentException("Email ja esta sendo usado");
         }
 
-        userCollectionRepository.save(UserCollection.builder()
-            .id(String.format(ID_PATTERN, Instant.now().toEpochMilli(), UUID.randomUUID()))
-            .firstName(user.getFirstName())
-            .lastName(user.getLastName())
-            .email(user.getEmail())
-            .password(user.getPassword())
-            .build());
+        UserCollection collection = mapper.toDatabase(user);
+
+        collection.setId(String.format(ID_PATTERN, Instant.now().toEpochMilli(), UUID.randomUUID()));
+        this.userCollectionRepository.save(collection);
+
     }
 }
