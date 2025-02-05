@@ -6,7 +6,8 @@ public enum EInternalTypeErrorCodes {
     E400001("An user with this e-mail already exists: %s"),
     E400002("Bad Request to: %s"),
     E400003("Invalid credentials."),
-    E400004("This user not exists: %s");
+    E400004("This user not exists: %s"),
+    E400005("Invalid date: %s");
 
     private final String message;
 
