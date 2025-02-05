@@ -12,6 +12,7 @@ import com.example.hexagonal_architecture.adapters.out.database.repository.TaskC
 import com.example.hexagonal_architecture.application.core.domains.Task;
 import com.example.hexagonal_architecture.application.ports.out.task.InsertTaskOutputPort;
 import com.example.hexagonal_architecture.application.ports.out.user.FindUserByIdOutputPort;
+import com.example.hexagonal_architecture.configurations.handler.exceptions.InvalidDateException;
 
 @Component
 public class InsertTaskAdapter implements InsertTaskOutputPort {
@@ -31,13 +32,33 @@ public class InsertTaskAdapter implements InsertTaskOutputPort {
     @Override
     public void saveTask(Task task) throws Exception {
 
-        this.findUserByIdOutputPort.findUser(task.getUserId());
-
+        this.validateUserExists(task);
+        // this.validateStartAndEndDate(task);
+    
         TaskCollection collection = mapper.toDatabase(task);
-
-        collection.setId(String.format(ID_PATTERN, Instant.now().toEpochMilli(), UUID.randomUUID()));
         collection.setCreatedAt(LocalDateTime.now());
 
+        this.dateValidation(collection);
+
+        this.save(collection);
+    }
+
+    private void save(TaskCollection collection){
+        collection.setId(String.format(ID_PATTERN, Instant.now().toEpochMilli(), UUID.randomUUID()));
         this.taskCollectionRepository.save(collection);
+    }
+
+    private void validateUserExists(Task task) throws Exception{
+        this.findUserByIdOutputPort.findUser(task.getUserId());
+    }
+
+    private void dateValidation(TaskCollection collection) throws Exception{
+        if (collection.getStartAt().isAfter(collection.getEndAt())){
+            throw new InvalidDateException("The start date must be greater than the end date");
+        }
+
+        if (collection.getCreatedAt().isAfter(collection.getStartAt()) || collection.getCreatedAt().isAfter(collection.getEndAt())){
+            throw new InvalidDateException("The start/end date must be greater than the current date");
+        }
     }
 }
