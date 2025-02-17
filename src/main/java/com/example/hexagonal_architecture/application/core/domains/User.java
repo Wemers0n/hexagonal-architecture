@@ -7,16 +7,18 @@ public class User {
     private String lastName;
     private String email;
     private String password;
+    private Boolean authenticated;
 
     public User() {
     }
 
-    public User(String id, String firstName, String lastName, String email, String password) {
+    public User(String id, String firstName, String lastName, String email, String password, Boolean authenticated) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.authenticated = authenticated;
     }
 
     public User(String firstName, String lastName, String email, String password) {
@@ -66,5 +68,12 @@ public class User {
         this.password = password;
     }
 
+    public Boolean getAuthenticated() {
+        return authenticated;
+    }
+
+    public void setAuthenticated(Boolean authenticated) {
+        this.authenticated = authenticated;
+    }
         
 }

@@ -34,7 +34,8 @@ public class FindUserByIdAdapter implements FindUserByIdOutputPort{
        user.getFirstName(),
        user.getLastName(),
        user.getEmail(),
-       user.getPassword());
+       user.getPassword(),
+       user.getAuthenticated());
     }
 
 }

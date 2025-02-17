@@ -33,6 +33,7 @@ public class FindUserByEmailAdapter implements FindUserByEmailOutputPort{
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
-                user.getPassword());
+                user.getPassword(),
+                user.getAuthenticated());
     }
 }

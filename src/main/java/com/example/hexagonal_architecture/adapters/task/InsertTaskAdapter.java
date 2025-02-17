@@ -32,8 +32,8 @@ public class InsertTaskAdapter implements InsertTaskOutputPort {
     @Override
     public void saveTask(Task task) throws Exception {
 
-        this.validateUserExists(task);
-        // this.validateStartAndEndDate(task);
+        // this.validateUserExists(task);
+        this.findUserByIdOutputPort.findUser(task.getUserId());
     
         TaskCollection collection = mapper.toDatabase(task);
         collection.setCreatedAt(LocalDateTime.now());
@@ -48,9 +48,9 @@ public class InsertTaskAdapter implements InsertTaskOutputPort {
         this.taskCollectionRepository.save(collection);
     }
 
-    private void validateUserExists(Task task) throws Exception{
-        this.findUserByIdOutputPort.findUser(task.getUserId());
-    }
+    // private void validateUserExists(Task task) throws Exception{
+    //     this.findUserByIdOutputPort.findUser(task.getUserId());
+    // }
 
     private void dateValidation(TaskCollection collection) throws Exception{
         if (collection.getStartAt().isAfter(collection.getEndAt())){

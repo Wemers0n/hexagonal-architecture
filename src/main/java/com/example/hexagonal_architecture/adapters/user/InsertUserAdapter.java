@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.example.hexagonal_architecture.adapters.mappers.UserMapper;
@@ -19,10 +20,12 @@ public class InsertUserAdapter implements InsertUserOutputPort {
     private static final String ID_PATTERN = "%s_%s"; 
 
     private final UserCollectionRepository userCollectionRepository;
+    private final PasswordEncoder passwordEncoder;
     private final UserMapper mapper;
 
-    public InsertUserAdapter(UserCollectionRepository userCollectionRepository, UserMapper mapper) {
+    public InsertUserAdapter(UserCollectionRepository userCollectionRepository, PasswordEncoder passwordEncoder, UserMapper mapper) {
         this.userCollectionRepository = userCollectionRepository;
+        this.passwordEncoder = passwordEncoder;
         this.mapper = mapper;
     }
 
@@ -37,6 +40,8 @@ public class InsertUserAdapter implements InsertUserOutputPort {
         UserCollection collection = mapper.toDatabase(user);
 
         collection.setId(String.format(ID_PATTERN, Instant.now().toEpochMilli(), UUID.randomUUID()));
+        collection.setPassword(passwordEncoder.encode(collection.getPassword()));
+        collection.setAuthenticated(false);
         this.userCollectionRepository.save(collection);
 
     }
