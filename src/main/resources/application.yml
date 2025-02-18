@@ -8,4 +8,9 @@ spring:
         mongodb:
             database: admin
             uri: ${MONGO_DB_URI:mongodb://admin:root@localhost:27017}
-            
+
+jwt:
+    private:
+        key: classpath:app.key
+    public:
+        key: classpath:app.pub     
