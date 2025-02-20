@@ -20,7 +20,9 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.example.hexagonal_architecture.configurations.auth.jwt.JWTFilter;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -43,8 +45,8 @@ public class SecurityConfig {
     private RSAPrivateKey priv;
 
     private static final String[] WHITELIST = {
-        "/api/user/**",
-        "/api/tasks/**"
+        "/api/user/**"
+        // "/api/tasks/**"
     };
 
     @Bean
@@ -81,7 +83,8 @@ public class SecurityConfig {
                         auth -> auth.requestMatchers(WHITELIST).permitAll()
                                 .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
-                .oauth2ResourceServer(conf -> conf.jwt(Customizer.withDefaults()));
+                .oauth2ResourceServer(conf -> conf.jwt(jwt -> jwt.decoder(jwtDecoder())))
+                .addFilterBefore(new JWTFilter(jwtDecoder()), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 

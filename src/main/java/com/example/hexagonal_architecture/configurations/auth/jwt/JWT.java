@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.hexagonal_architecture.adapters.in.user.dtos.AuthTokenResponse;
 import com.example.hexagonal_architecture.adapters.out.database.model.UserCollection;
+import com.example.hexagonal_architecture.adapters.out.database.repository.UserCollectionRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,12 +21,13 @@ import lombok.RequiredArgsConstructor;
 public class JWT {
 
     private final JwtEncoder encoder;
+    private final UserCollectionRepository userCollectionRepository;
 
     public AuthTokenResponse generateToken(Authentication authentication){
         Instant now = Instant.now();
         long expiry = 3600L;
 
-        String scopes = authentication.getAuthorities().stream()
+        String scope = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(" "));
 
@@ -36,19 +38,22 @@ public class JWT {
                         .issuedAt(now)
                         .expiresAt(now.plusSeconds(expiry))
                         .subject(user.getEmail())
-                        .claim("scope", scopes)
+                        .claim("scope", scope)
                         .build();
 
         var token = encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
 
+        user.setAuthenticated(true);
+        userCollectionRepository.save(user);
+
         return AuthTokenResponse.builder()
         .token_type("Bearer")
         .access_token(token)
-        .username(user.getEmail())
+        .email(user.getEmail())
         .build();
     }
 
-    private UserCollection getUser(Authentication authentication){
+    public UserCollection getUser(Authentication authentication){
         return (UserCollection) authentication.getPrincipal();
     }
 

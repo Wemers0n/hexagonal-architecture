@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TaskRequestDTO {
 
-    private String userId;
+    // private String userId;
     private String title;
     private String description;
     private String priority;
