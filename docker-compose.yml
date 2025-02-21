@@ -6,10 +6,24 @@ services:
     networks:
       - hexagonal-arch
     environment:
-       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
-       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+       MONGO_INITDB_ROOT_USERNAME: admin
+       MONGO_INITDB_ROOT_PASSWORD: root
     ports:
       - "27017:27017"
+
+  hexagonal-architecture:
+    build: .
+    container_name: hexagonal-arch-service
+    restart: always
+
+    networks:
+      - hexagonal-arch
+    depends_on:
+      - hexagonal-arch-db
+    environment:
+      - MONGO_DB_URI=mongodb://admin:root@hexagonal-arch-db:27017
+    ports:
+      - "8080:8080"
 
 networks:
   hexagonal-arch:
