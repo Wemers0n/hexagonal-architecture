@@ -45,8 +45,10 @@ public class SecurityConfig {
     private RSAPrivateKey priv;
 
     private static final String[] WHITELIST = {
-        "/api/user/**"
-        // "/api/tasks/**"
+        "/api/user/**",
+        "/swagger-ui/**", 
+        "/v3/api-docs/**", 
+        "/swagger-ui.html"
     };
 
     @Bean
